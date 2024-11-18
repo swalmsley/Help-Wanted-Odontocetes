@@ -23,11 +23,22 @@ dt[,probNoProtector:=risk(density,radius),] # use function to calculate prob. of
   
 g <- ggplot(dt,aes(x=density,y=probNoProtector)) +
   geom_line(aes(color=radiusMetres, group=radiusMetres), linewidth=0.8) +
-  scale_color_gradient(name='Distance to threat (m)', low='firebrick2',high='grey')+
-  geom_text_repel(data=dt[density==mean(dt$density),,],aes(label=paste(as.character(radiusMetres),'m',sep='')))+
-  labs(x=bquote('Density of protectors '(km^2)), y="Probability of having no protectors within range") +
+  # scale_color_gradient(name='Distance to threat (m)', low='firebrick2',high='grey')+
+  scale_color_gradient(name=expression("(" * r * ")" ~ "Distance to threat (m)"), low='firebrick2',high='grey')+
+  geom_text_repel(data=dt[density==mean(dt$density),,],aes(label=paste(as.character(radiusMetres),'m',sep='')), point.padding=0.5)+
+  # labs(x=bquote('Density of protectors '(km^2)), y="Probability of having no protectors within range") +
+  labs(y = expression("(" * rho * ")" ~ "Probability of having no protectors within range " ~ "(" * km^-2 * ")"),
+       x = expression("(" * d * ")" ~ "Density of protectors"))+
   theme_classic()
 
 png('Figure2.png', width=8, height=6, units='in', res=800)
 g
 dev.off()
+
+
+
+
+
+
+
+
